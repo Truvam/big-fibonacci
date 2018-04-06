@@ -11,19 +11,19 @@ bignum newBigNum(int x, bignum bn) {
 void printBigNum(bignum n) {
     n = reverse(n);
     int all_zero = 0;
-    if(n->value == 0 && n->rest != NULL){
-        n = n->rest;
+    if(head(n) == 0 && tail(n) != NULL){
+        n = tail(n);
         all_zero = 1;
     } 
     while (n != NULL) {
-        if(n->value != 0) {
-            printf("%d", n->value);
+        if(head(n) != 0) {
+            printf("%d", head(n));
             all_zero = 0;
         }
-        else if(n->value == 0 && all_zero == 0) {
-            printf("%d", n->value);
+        else if(head(n) == 0 && all_zero == 0) {
+            printf("%d", head(n));
         }
-        n = n->rest;
+        n = tail(n);
     }
     if(all_zero == 1)
         printf("0");
@@ -33,22 +33,24 @@ void printBigNum(bignum n) {
 
 bignum intToBignum(int x) {
     if(x == 0) {
-        return NULL;
+        return newBigNum(0, NULL);
     }
     int tmp = x % 10;
     x /= 10;
     return newBigNum(tmp, intToBignum(x));
 }
 
-/*
-bignum StringToBignum(char *x) {
-    if(x == 0) {
-        return NULL;
+
+int BignumIsZero(bignum n) {
+    int all_zero = 1;
+    while (n != NULL) {
+        if(head(n) != 0) {
+            all_zero = 0;
+        }
+        n = tail(n);
     }
-    int tmp = x % 10;
-    x /= 10;
-    return newBigNum(tmp, intToBignum(x));
-}*/
+    return all_zero;
+}
 
 
 bignum addition(bignum n1, bignum n2) {
@@ -95,6 +97,9 @@ bignum addition_aux(bignum n1, bignum n2, int carry) {
 
 
 bignum subtraction(bignum n1, bignum n2) {
+    if(compare(n1, n2) != 1) {
+        return newBigNum(0, NULL);
+    }
     bignum b = subtraction_aux(n1, n2, 0);
     return b;
 }
@@ -128,8 +133,10 @@ bignum subtraction_aux(bignum n1, bignum n2, int carry) {
     }
     val = head(n1) - head(n2);
     if(carry != 0) {
-        if(val > 0)
+        if(val > 0) {
             val -= carry;
+            carry = 0;
+        }
     }
     if(val < 0) {
         for(i = 0; tmp != head(n1); i++) {
@@ -176,7 +183,7 @@ bignum multiplication_aux(bignum n1, bignum n2, int carry) {
             carry = value / 10;
             value = value % 10; 
             b = newBigNum(value, b);
-            n1 = n1->rest;     
+            n1 = tail(n1);     
         }
         if(carry > 0)
             b = newBigNum(carry, b);
@@ -186,7 +193,7 @@ bignum multiplication_aux(bignum n1, bignum n2, int carry) {
         b = NULL;
         for(i = 0; i < j; i++)
             b = newBigNum(0, b);
-        n2 = n2->rest;
+        n2 = tail(n2);
         n1 = n_aux;
         carry = 0;
         j++;
@@ -196,7 +203,12 @@ bignum multiplication_aux(bignum n1, bignum n2, int carry) {
 
 
 bignum division(bignum n1, bignum n2) {
-    printf("division");
+    int i = 0;
+    while(compare(n1, n2) == 1 || compare(n1, n2) == 0) {
+        n1 = subtraction(n1 ,n2);
+        i++;
+    }
+    return intToBignum(i);
 }
 
 

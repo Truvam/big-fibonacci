@@ -10,9 +10,11 @@ bignum newBigNum(int x, list r);
 
 void printBigNum(bignum n);
 
+int BignumIsZero(bignum n);
+
 bignum intToBignum(int x);
 
-bignum StringToBignum(char *x);
+bignum stringToBignum(char *x);
 
 bignum addition(bignum n1, bignum n2);
 bignum addition_aux(bignum n1, bignum n2, int carry);
@@ -26,5 +28,6 @@ bignum multiplication_aux(bignum n1, bignum n2, int carry);
 bignum division(bignum n1, bignum n2);
 
 bignum fibonacci(int x);
+
 
 #endif

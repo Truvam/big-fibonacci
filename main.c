@@ -64,7 +64,6 @@ void calculate(int op, int n1, int n2) {
     else if(op == 2) {
         bignum sub = subtraction(b1, b2);
         printf("Result: ");
-        //printList(sub);
         printBigNum(sub);
     }
     else if(op == 3) {
@@ -74,6 +73,8 @@ void calculate(int op, int n1, int n2) {
     }
     else {
         bignum div = division(b1, b2);
+        printf("Result: ");
+        printBigNum(div);
     }
 }
 

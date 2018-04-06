@@ -22,6 +22,9 @@ void printList(list l);
 int elem(int n, list l);
 
 int length(list l);
+int length_zero(list l);
+
+int compare(list l1, list l2);
 
 list reverse(list l);
 

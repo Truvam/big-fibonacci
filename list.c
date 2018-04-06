@@ -22,9 +22,9 @@ list tail(list l) {
 
 
 void printList(list l) {
-    printf("%d ", l->value);
-    if (l->rest != NULL) {
-        printList(l->rest);
+    printf("%d ", head(l));
+    if (tail(l) != NULL) {
+        printList(tail(l));
     }
     else {
         printf("\n");
@@ -36,11 +36,11 @@ int elem(int n, list l) {
     int x, i = 0;
     while(l != NULL) {
         if(i == n) {
-            return l->value;
+            return head(l);
         }
         else {
             i++;
-            l = l->rest;
+            l = tail(l);
         }
     }
     return -1;
@@ -57,11 +57,68 @@ int length(list l) {
 }
 
 
+int length_zero(list l) {
+    int i = 0, j = 0;
+    int is_zero = 0;
+    while(l != NULL) {
+        if(head(l) == 0) {
+            is_zero = 1;
+        }
+        else if(head(l) != 0) {
+            i += j;
+            i++;
+            j = 0;
+            is_zero = 0;
+        }
+        if(is_zero == 1) {
+            j++;
+        }
+        l = tail(l);
+    }
+    return i;
+}
+
+
+int compare(list l1, list l2) {
+    if(length_zero(l1) < length_zero(l2)) return -1;
+    else if(length_zero(l1) > length_zero(l2)) return 1;
+    else {
+        l1 = reverse(l1);
+        l2 = reverse(l2);
+        list l1_tmp = l1;
+        list l2_tmp = l2;
+        while(l1_tmp != NULL) {
+            if(head(l1_tmp) == 0) 
+                l1_tmp = tail(l1_tmp);
+            else if(head(l2_tmp) == 0) 
+                l2_tmp = tail(l2_tmp);
+            else {
+                if(head(l1_tmp) < head(l2_tmp)) {
+                    l1 = reverse(l1);
+                    l2 = reverse(l2);
+                    return -1;
+                }
+                else if(head(l1_tmp) > head(l2_tmp)){
+                    l1 = reverse(l1);
+                    l2 = reverse(l2);
+                    return 1;
+                }
+                l1_tmp = tail(l1_tmp);
+                l2_tmp = tail(l2_tmp);
+            }
+        }
+    }
+    l1 = reverse(l1);
+    l2 = reverse(l2);
+    return 0;
+}
+
+
 list reverse(list l) {
     list new_list = NULL;
     list next = NULL;
     while(l != NULL) {
-        next = l->rest;
+        next = tail(l);
         l->rest = new_list;
         new_list = l;
         l = next;
@@ -71,8 +128,8 @@ list reverse(list l) {
 
 
 void append(list l1, list l2) {
-    while(l1->rest != NULL){
-        l1 = l1->rest;
+    while(tail(l1) != NULL){
+        l1 = tail(l1);
     }
     l1->rest = l2;
 }
@@ -127,9 +184,3 @@ list filter(bool (*f)(int), list l) {
         }
     }  
 }
-
-
-
-
-
-
