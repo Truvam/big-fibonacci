@@ -113,13 +113,18 @@ int compare(list l1, list l2) {
         l2 = reverse(l2);
         list l1_tmp = l1;
         list l2_tmp = l2;
+        //printList(l1_tmp);
+        //printList(l2_tmp);
         while(l1_tmp != NULL) {
-            if(head(l1_tmp) == 0 && head(l2_tmp) == 0) {
+            //printf("h1:%d   h2:%d\n", head(l1_tmp), head(l2_tmp));
+            if(head(l1_tmp) == 0 && head(l2_tmp) == 0 && zero == 1) {
                 l1_tmp = tail(l1_tmp);
                 l2_tmp = tail(l2_tmp);
-                zero = 1;
             }
             else if(head(l1_tmp) == 0 && tail(l2) == NULL && zero == 1) {
+                l1_tmp = tail(l1_tmp);
+            }
+            else if(head(l1_tmp) == 0 &&  head(l2_tmp) != 0 && zero == 1 && tail(l2_tmp) != NULL) {
                 l1_tmp = tail(l1_tmp);
             }
             else {
