@@ -109,6 +109,9 @@ bignum subtraction(bignum n1, bignum n2) {
     if(compare(n1, n2) == -1) {
         return newBigNum(0, NULL);
     }
+    else if(listIsZero(n1) == 1 && listIsZero(n2) == 1) {
+        return newBigNum(0, NULL);
+    }
     bignum b = subtraction_aux(n1, n2, 0);
     return b;
 }
