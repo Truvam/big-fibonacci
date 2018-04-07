@@ -3,14 +3,15 @@
 #include "list.h"
 #include "bignum.h"
 
+#define MAX_SIZE 255
 
 int fib_rec(int x);
 int fib_dinamic(int x);
-void calculate(int op, int n1, int n2);
+void calculate(int op, char *n1, char *n2);
 
 
 int main() {
-    int n1, n2, op;
+    int n, op;
     printf("1: Recursive Fibonacci\n");
     printf("2: Optimized Fibonacci\n");
     printf("3: Big Numbers\n");
@@ -18,13 +19,13 @@ int main() {
     scanf("%d", &op);
     if(op == 1) {
         printf("Number: ");        
-        scanf("%d", &n1);
-        printf("Result: %d\n", fib_rec(n1));
+        scanf("%d", &n);
+        printf("Result: %d\n", fib_rec(n));
     }
     else if(op == 2) {
         printf("Number: ");        
-        scanf("%d", &n1);
-        printf("Result: %d\n", fib_dinamic(n1));
+        scanf("%d", &n);
+        printf("Result: %d\n", fib_dinamic(n));
     }
     else {
         printf("1: Addition\n");
@@ -36,16 +37,17 @@ int main() {
         scanf("%d", &op);
         if(op == 5) {
             printf("Number: ");        
-            scanf("%d", &n1);
-            bignum fib = fibonacci(n1);
+            scanf("%d", &n);
+            bignum fib = fibonacci(n);
             printf("Result: ");
             printBigNum(fib);
         }
         else {
+            char n1[MAX_SIZE], n2[MAX_SIZE];
             printf("First Number: ");
-            scanf("%d", &n1);
+            scanf("%s", n1);
             printf("Second Number: ");
-            scanf("%d", &n2);
+            scanf("%s", n2);
             calculate(op, n1, n2);
         }
     }
@@ -53,9 +55,9 @@ int main() {
 }
 
 
-void calculate(int op, int n1, int n2) {
-    bignum b1 = intToBignum(n1);
-    bignum b2 = intToBignum(n2);
+void calculate(int op, char *n1, char *n2) {
+    bignum b1 = stringToBigNum(n1);
+    bignum b2 = stringToBigNum(n2);
     if(op == 1) {
         bignum add = addition(b1, b2);
         printf("Result: ");

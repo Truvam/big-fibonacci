@@ -10,11 +10,12 @@ bignum newBigNum(int x, list r);
 
 void printBigNum(bignum n);
 
-int BignumIsZero(bignum n);
+int BigNumIsZero(bignum n);
 
-bignum intToBignum(int x);
+bignum intToBigNum(int x);
 
-bignum stringToBignum(char *x);
+bignum stringToBigNum(char *x);
+bignum stringToBigNum_aux(char *x, int i);
 
 bignum addition(bignum n1, bignum n2);
 bignum addition_aux(bignum n1, bignum n2, int carry);

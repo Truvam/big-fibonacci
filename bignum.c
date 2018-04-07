@@ -1,6 +1,7 @@
 #include "list.h"
 #include "bignum.h"
 #include <stdio.h>
+#include <string.h>
 
 
 bignum newBigNum(int x, bignum bn) {
@@ -31,17 +32,37 @@ void printBigNum(bignum n) {
 }
 
 
-bignum intToBignum(int x) {
+bignum intToBigNum(int x) {
     if(x == 0) {
         return newBigNum(0, NULL);
     }
     int tmp = x % 10;
     x /= 10;
-    return newBigNum(tmp, intToBignum(x));
+    return newBigNum(tmp, intToBigNum(x));
 }
 
 
-int BignumIsZero(bignum n) {
+bignum stringToBigNum(char *x){
+    int size = strlen(x);
+    bignum b = stringToBigNum_aux(x, size);
+    return b;
+}
+
+
+bignum stringToBigNum_aux(char *x, int i){
+    if(i == 0) {
+        return NULL;
+    }
+    else if(strlen(x) == 1 && x[0] == '0') {
+        return newBigNum(0, NULL);
+    }
+    i--;
+    int n = x[i] - '0';
+    return newBigNum(n, stringToBigNum_aux(x, i));
+}
+
+
+int BigNumIsZero(bignum n) {
     int all_zero = 1;
     while (n != NULL) {
         if(head(n) != 0) {
@@ -204,17 +225,17 @@ bignum multiplication_aux(bignum n1, bignum n2, int carry) {
 
 bignum division(bignum n1, bignum n2) {
     int i = 0;
-    if(BignumIsZero(n2) == 1) {
+    if(BigNumIsZero(n2) == 1) {
         return newBigNum(0, NULL);
     }
-    else if(BignumIsZero(n1) == 1 && BignumIsZero(n2) == 1) {
+    else if(BigNumIsZero(n1) == 1 && BigNumIsZero(n2) == 1) {
         return newBigNum(0, NULL);
     }
     while(compare(n1, n2) != -1) {
         n1 = subtraction(n1 ,n2);
         i++;
     }
-    return intToBignum(i);
+    return intToBigNum(i);
 }
 
 
