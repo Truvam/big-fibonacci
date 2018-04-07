@@ -97,7 +97,7 @@ bignum addition_aux(bignum n1, bignum n2, int carry) {
 
 
 bignum subtraction(bignum n1, bignum n2) {
-    if(compare(n1, n2) != 1) {
+    if(compare(n1, n2) == -1) {
         return newBigNum(0, NULL);
     }
     bignum b = subtraction_aux(n1, n2, 0);
@@ -204,7 +204,13 @@ bignum multiplication_aux(bignum n1, bignum n2, int carry) {
 
 bignum division(bignum n1, bignum n2) {
     int i = 0;
-    while(compare(n1, n2) == 1 || compare(n1, n2) == 0) {
+    if(BignumIsZero(n2) == 1) {
+        return newBigNum(0, NULL);
+    }
+    else if(BignumIsZero(n1) == 1 && BignumIsZero(n2) == 1) {
+        return newBigNum(0, NULL);
+    }
+    while(compare(n1, n2) != -1) {
         n1 = subtraction(n1 ,n2);
         i++;
     }
