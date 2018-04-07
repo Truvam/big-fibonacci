@@ -10,8 +10,6 @@ bignum newBigNum(int x, list r);
 
 void printBigNum(bignum n);
 
-int BigNumIsZero(bignum n);
-
 bignum intToBigNum(int x);
 
 bignum stringToBigNum(char *x);

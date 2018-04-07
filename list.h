@@ -24,13 +24,13 @@ int elem(int n, list l);
 int length(list l);
 int length_zero(list l);
 
+int listIsZero(list n);
+
 int compare(list l1, list l2);
 
 list reverse(list l);
 
-void append(list l1, list l2);
-
-list append_new(list l1, list l2);
+list append(list l1, list l2);
 
 list add_pos(int x, list l, int pos);
 

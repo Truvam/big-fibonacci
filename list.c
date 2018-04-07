@@ -58,6 +58,9 @@ int length(list l) {
 
 
 int length_zero(list l) {
+    /*
+     * Returns the length of the list without counting the zeros at the left.
+     */
     int i = 0, j = 0;
     int is_zero = 0;
     while(l != NULL) {
@@ -79,7 +82,29 @@ int length_zero(list l) {
 }
 
 
+int listIsZero(list n) {
+    /*
+     * Used to verify if the list only has 0's.
+     */
+    int all_zero = 1;
+    while (n != NULL) {
+        if(head(n) != 0) {
+            all_zero = 0;
+        }
+        n = tail(n);
+    }
+    return all_zero;
+}
+
+
 int compare(list l1, list l2) {
+    /*
+     * This function is used to compare two lists;
+     * Returns:
+     *   -1, if list l1 is smaller than l2;
+     *    1, if list l1 is bigger than l2;
+     *    0, if list l1 is equal to l2.
+     */
     if(length_zero(l1) < length_zero(l2)) return -1;
     else if(length_zero(l1) > length_zero(l2)) return 1;
     else {
@@ -133,19 +158,11 @@ list reverse(list l) {
 }
 
 
-void append(list l1, list l2) {
-    while(tail(l1) != NULL){
-        l1 = tail(l1);
-    }
-    l1->rest = l2;
-}
-
-
-list append_new(list l1, list l2) {
+list append(list l1, list l2) {
     if(l1 == NULL) {
         return newList(head(l2), tail(l2));
     }
-    list l3 = append_new(tail(l1), l2);
+    list l3 = append(tail(l1), l2);
     list l4 = newList(head(l1), l3);
     return l4;
 }
